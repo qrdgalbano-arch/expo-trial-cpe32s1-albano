@@ -1,31 +1,68 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { useState } from 'react';
 
 export default function App() {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  function goalInputHandler(enteredText) {
+    setEnteredGoalText(enteredText);
+  };
+
+  function addGoalHandler() {
+    setCourseGoals((currentCourseGoals) =>[
+      ...currentCourseGoals,
+      enteredGoalText,
+    ]);
+  };
+
+
+
   return (
-    <View style={styles.container}>
-      <Text style = {styles.Titletext}>My Awesome Project</Text>
-      <Text style = {styles.Bodytext}>By: Reagan Dantinaise G. Albano</Text>
-      <StatusBar style="auto" />
+    <View style = {styles.appContainer}>
+
+      <View style = {styles.inputContainer}>
+        <TextInput style = {styles.textInput} 
+        placeholder='Pass the course!!' 
+        onChangeText={goalInputHandler} 
+        />
+
+        <Button title='Add Goal'
+        onPress={addGoalHandler} 
+        />
+      </View>
+
+      <View style = {styles.goalsContainer}>
+        {courseGoals.map((goal) => <Text key ={goal}>{goal}</Text>)}
+      </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    paddingTop: 50,
+    paddingHorizontal: 16,
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#cccccc'
   },
-  Titletext: {
-    fontFamily: 'serif',
-    fontSize: 18,
-    fontWeight: 'bold',
+  textInput: {
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    width: '70%',
+    marginRight: 8,
+    padding: 13,
   },
-
-    Bodytext: {
-    fontFamily: 'serif',
-    fontSize: 14,
-  },
+  goalsContainer: {
+    flex: 5,
+  }
 });
