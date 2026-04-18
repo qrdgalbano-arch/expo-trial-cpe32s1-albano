@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style = {styles.Titletext}>My Awesome Project</Text>
-      <Text style = {styles.Bodytext}>By: Reagan Dantinaise G. Albano</Text>
-      <StatusBar style="auto" />
-=======
 import {
   StyleSheet,
   View,
@@ -47,35 +36,18 @@ export default function App() {
           )}
         />
       </View>
->>>>>>> 14214bb (HOA11.1 Procedure, April 18, 2026)
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-<<<<<<< HEAD
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Titletext: {
-    fontFamily: 'serif',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-
-    Bodytext: {
-    fontFamily: 'serif',
-    fontSize: 14,
-=======
     paddingTop: 50,
     paddingHorizontal: 16,
     backgroundColor: '#f0f0f7ff',
   },
   goalListContainer: {
     flex: 5,
->>>>>>> 14214bb (HOA11.1 Procedure, April 18, 2026)
   },
 });
