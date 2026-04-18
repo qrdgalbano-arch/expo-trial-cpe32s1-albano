@@ -1,3 +1,6 @@
+// SUPPLEMENTARY OUTPUT – Hands-on Activity 11.1
+// ILO2: Component decomposition (Reusable list item component)
+
 import { View, Text, StyleSheet } from 'react-native';
 
 function GoalItem(props) {
