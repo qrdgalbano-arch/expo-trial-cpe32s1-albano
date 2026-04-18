@@ -2,8 +2,8 @@ import { View, Text, StyleSheet } from 'react-native';
 
 function GoalItem(props) {
   return (
-    <View style={styles.item}>
-      <Text style={styles.text}>{props.text}</Text>
+    <View style={styles.goalItems}>
+      <Text style={styles.goalText}>{props.text}</Text>
     </View>
   );
 }
@@ -11,11 +11,11 @@ function GoalItem(props) {
 export default GoalItem;
 
 const styles = StyleSheet.create({
-  item: {
-    padding: 8,
-    marginVertical: 4,
+  goalItems: {
+    flexDirection: 'row',
   },
-  text: {
+  goalText: {
     fontSize: 14,
+    fontWeight: 'semibold',
   },
 });

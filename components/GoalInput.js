@@ -6,10 +6,11 @@ function GoalInput(props) {
 
   function inputHandler(text) {
     setEnteredGoalText(text);
+    props.onGoalInput(text);
   }
 
   function addGoalHandler() {
-    props.onAddGoal(enteredGoalText);
+    props.onAddGoal();
     setEnteredGoalText('');
   }
 
