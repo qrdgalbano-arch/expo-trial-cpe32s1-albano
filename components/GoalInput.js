@@ -1,7 +1,3 @@
-// SUPPLEMENTARY OUTPUT – Hands-on Activity 11.2
-// Focus: Replacing Button with Pressable for 'Add Goal'
-// Objective: Demonstrate improved interaction handling using Pressable
-
 import { useState } from 'react';
 import { View, TextInput, StyleSheet, Pressable, Text } from 'react-native';
 

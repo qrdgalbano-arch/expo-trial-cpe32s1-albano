@@ -1,13 +1,15 @@
-// SUPPLEMENTARY OUTPUT – Hands-on Activity 11.1
-// ILO2: Component decomposition (Reusable list item component)
+// TASK OUTPUT – Hands-on Activity 11.3 | Using Modal Component
+// MODIFIED LIST ITEM WITH DELETE SUPPORT
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 
 function GoalItem(props) {
   return (
-    <View style={styles.item}>
-      <Text style={styles.text}>{props.text}</Text>
-    </View>
+    <Pressable onPress={() => props.onDelete(props.id)}>
+      <View style={styles.item}>
+        <Text style={styles.text}>{props.text}</Text>
+      </View>
+    </Pressable>
   );
 }
 
