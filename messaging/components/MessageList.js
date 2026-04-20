@@ -2,9 +2,54 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
 import { MessageShape } from '../utils/MessageUtils';
 
 const keyExtractor = item => item.id.toString();
+
+const AnimatedMessageItem = ({ item, onPressMessage }) => {
+  const scale = useSharedValue(0.8);
+
+  React.useEffect(() => {
+    scale.value = withSpring(1, { damping: 6, stiffness: 90 });
+  }, []);
+
+  return (
+    <Animated.View style={[styles.messageRow, { transform: [{ scale }] }]}>
+      <TouchableOpacity onPress={() => onPressMessage(item)}>
+        {renderMessageBody(item)}
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
+
+const renderMessageBody = ({ type, text, uri, coordinate }) => {
+  switch (type) {
+    case 'text':
+      return (
+        <View style={styles.messageBubble}>
+          <Text style={styles.text}>{text}</Text>
+        </View>
+      );
+    case 'image':
+      return <Image style={styles.image} source={{ uri }} />;
+    case 'location':
+      return (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            ...coordinate,
+            latitudeDelta: 0.08,
+            longitudeDelta: 0.04,
+          }}
+        >
+          <Marker coordinate={coordinate} />
+        </MapView>
+      );
+    default:
+      return null;
+  }
+};
 
 export default class MessageList extends React.Component {
   static propTypes = {
@@ -19,40 +64,8 @@ export default class MessageList extends React.Component {
   renderMessageItem = ({ item }) => {
     const { onPressMessage } = this.props;
     return (
-      <View key={item.id} style={styles.messageRow}>
-        <TouchableOpacity onPress={() => onPressMessage(item)}>
-          {this.renderMessageBody(item)}
-        </TouchableOpacity>
-      </View>
+      <AnimatedMessageItem item={item} onPressMessage={onPressMessage} />
     );
-  };
-
-  renderMessageBody = ({ type, text, uri, coordinate }) => {
-    switch (type) {
-      case 'text':
-        return (
-          <View style={styles.messageBubble}>
-            <Text style={styles.text}>{text}</Text>
-          </View>
-        );
-      case 'image':
-        return <Image style={styles.image} source={{ uri }} />;
-      case 'location':
-        return (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              ...coordinate,
-              latitudeDelta: 0.08,
-              longitudeDelta: 0.04,
-            }}
-          >
-            <Marker coordinate={coordinate} />
-          </MapView>
-        );
-      default:
-        return null;
-    }
   };
 
   render() {
