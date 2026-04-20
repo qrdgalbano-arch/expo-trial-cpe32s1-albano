@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Status from './components/Status';
 import MessageList from './components/MessageList';
+import Toolbar from './components/Toolbar';
 import {
   createImageMessage,
   createLocationMessage,
@@ -27,6 +28,7 @@ export default class App extends React.Component {
       }),
     ],
     fullscreenImageId: null,
+    isInputFocused: false,
   };
 
   componentDidMount() {
@@ -46,6 +48,25 @@ export default class App extends React.Component {
 
   dismissFullscreenImage = () => {
     this.setState({ fullscreenImageId: null });
+  };
+
+  handlePressToolbarCamera = () => {
+    // ...
+  };
+
+  handlePressToolbarLocation = () => {
+    // ...
+  };
+
+  handleChangeFocus = (isFocused) => {
+    this.setState({ isInputFocused: isFocused });
+  };
+
+  handleSubmit = (text) => {
+    const { messages } = this.state;
+    this.setState({
+      messages: [createTextMessage(text), ...messages],
+    });
   };
 
   handlePressMessage = ({ id, type }) => {
@@ -73,7 +94,7 @@ export default class App extends React.Component {
         );
         break;
       case 'image':
-        this.setState({ fullscreenImageId: id });
+        this.setState({ fullscreenImageId: id, isInputFocused: false });
         break;
       default:
         break;
@@ -105,13 +126,28 @@ export default class App extends React.Component {
     );
   }
 
+  renderToolbar() {
+    const { isInputFocused } = this.state;
+    return (
+      <View style={styles.toolbar}>
+        <Toolbar
+          isFocused={isInputFocused}
+          onSubmit={this.handleSubmit}
+          onChangeFocus={this.handleChangeFocus}
+          onPressCamera={this.handlePressToolbarCamera}
+          onPressLocation={this.handlePressToolbarLocation}
+        />
+      </View>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Status />
         {this.renderMessageList()}
+        {this.renderToolbar()}
         <View style={styles.inputMethodEditor} />
-        <View style={styles.toolbar} />
         {this.renderFullscreenImage()}
       </View>
     );
